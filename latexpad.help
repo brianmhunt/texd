@@ -1,0 +1,49 @@
+% $Id: latexpad.help,v 1.1 2002/02/23 15:39:00 jfine Exp $
+% Help page for LaTeXpad
+
+% Copyright (c) Jonathan Fine, 2002
+% mailto:jfine@activetex.org
+
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License; either version
+% 2 of the License, or (at your option) any later version.
+
+% $Log: latexpad.help,v $
+% Revision 1.1  2002/02/23 15:39:00  jfine
+% Initial revision
+%
+
+\hrule
+\medskip
+\begin{center}
+\textbf{Welcome to \LaTeX pad 0.1}
+\end{center}
+\medskip
+An interactive program for evaluating \LaTeX\ expressions.  
+\par\medskip
+\LaTeX pad typesets the text supplied at \LaTeX's {\tt Gimme:} prompt, and
+displays it using xdvi.  \LaTeX pad evaluates the material in a group
+(in fact, a {\tt\string\vbox}).
+\par\medskip
+Some examples you might like to try.
+\par\medskip
+{\tt Gimme: \string\LaTeX\ is wonderful!!!}\par
+{\tt Gimme: \string\input\ story }\par
+{\tt Gimme: \string\bf\ \string\input\ story }\par
+{\tt Gimme: \string\tt\ \string\meaning\string\LaTeX}\par
+\medskip
+
+For long expressions, use braces: {\tt\string{} \ldots\ lots of stuff
+\ldots\ {\tt\string}} 
+\par\medskip
+
+To exit, give \LaTeX pad an empty expression.
+\par\medskip
+To see this message again, 
+{\tt Gimme: \string\help }\par
+\par\medskip
+\textbf{For \LaTeX pad news, visit}{\tt\ http://www.activetex.org}
+\par\medskip
+\hrule
+
+% end of latexpad.help

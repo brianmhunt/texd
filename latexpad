@@ -1,0 +1,65 @@
+#!/bin/sh
+#  $Id: latexpad,v 1.1 2002/02/24 18:22:12 jfine Exp $
+#  latexpad: an interactive LaTeX interpreter
+
+# Copyright (c) Jonathan Fine, 2002
+# mailto:jfine@activetex.org
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License; either version
+# 2 of the License, or (at your option) any later version.
+
+# $Log: latexpad,v $
+# Revision 1.1  2002/02/24 18:22:12  jfine
+# Initial revision
+#
+    
+if [ $# -gt 0 ] ; then
+    echo "latexpad: an interactive LaTeX interpreter"
+    exit 0
+fi
+
+# get xdvi started
+tex '\shipout\hbox{\bf Welcome to La\TeX pad v0.1}\end'
+mv texput.dvi 2.dvi
+xdvi 2.dvi -paper 1ptx1pt -geometry 500x372 -s 3 &
+XDVI_PID=$!
+sleep 1 # give xdvi a chance to get going, before it gets a signal
+
+# get dvichop started
+rm -f latexpad.dvi
+mkfifo latexpad.dvi
+dvichop latexpad.dvi & 
+
+# do we have ipc enabled?
+tex -help | grep -q ipc
+HAVE_IPC=$?
+
+# if we do have ipc, use it
+if [ ${HAVE_IPC} -eq '0' ] ; then 
+  IPC=-ipc
+  NOFLUSH='\let\DviFlush\relax'
+else
+  IPC=
+  NOFLUSH=
+fi
+
+# start the TeX daemon
+latex ${IPC} "\\expandafter\\endinput\\input latexpad.sty" \
+  "\\documentclass{article}" \
+  "\\RequirePackage{dvichop}" \
+  "\\RequirePackage{latexpad}" \
+  "\\nofiles" \
+  "${NOFLUSH}" \
+  "\\begin{document}" \
+  "\\DviOpen" \
+  "\\latexpad{2}{${XDVI_PID}}" \
+  "\\DviClose" \
+  "\\end{document}"
+
+# clean up afterwards
+kill ${XDVI_PID}
+rm -f latexpad.dvi
+rm -f latexpad.tex
+
+# end of latexpad

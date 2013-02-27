@@ -1,0 +1,80 @@
+#!/bin/sh
+#  $Id: timetexd,v 1.1 2002/02/23 15:50:55 jfine Exp $
+#  timetexd: perform some timing tests on the TeX daemon
+
+# Copyright (c) Jonathan Fine, 2002
+# mailto:jfine@activetex.org
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License; either version
+# 2 of the License, or (at your option) any later version.
+
+# $Log: timetexd,v $
+# Revision 1.1  2002/02/23 15:50:55  jfine
+# Initial revision
+#
+
+if [ $# -gt 0 ] ; then
+    echo "timetexd: perform some timing tests on the TeX daemon"
+    exit 0
+fi
+
+export TIME="%E" # format for writing time
+
+# how long does it take to typeset a story, once
+cat << EOF > test0.tex 
+\shipout\vbox{\input story }
+\end
+EOF
+
+# how long does it take to produce 100 copies of story
+cat << EOF > test1.tex 
+\def\doit{\shipout\vbox{\input story }}
+\def\ten{\doit\doit\doit\doit\doit\doit\doit\doit\doit\doit}
+\ten\ten\ten\ten\ten\ten\ten\ten\ten\ten
+\end
+EOF
+
+# as before, but include the cost of marker and flushing pages
+cat << EOF > test2.tex 
+\input dvichop.sty 
+\def\doit{\DviBegin\shipout\vbox{\input story }\DviEnd}
+\def\ten{\doit\doit\doit\doit\doit\doit\doit\doit\doit\doit}
+\DviOpen
+\ten\ten\ten\ten\ten\ten\ten\ten\ten\ten
+\DviClose
+\end
+EOF
+
+# as before, but include cost of marker pages only
+cat << EOF > test3.tex 
+\input dvichop.sty 
+\def\doit{\DviBegin\shipout\vbox{\input story }\DviEnd}
+\let\DviFlush\relax
+\def\ten{\doit\doit\doit\doit\doit\doit\doit\doit\doit\doit}
+\DviOpen
+\ten\ten\ten\ten\ten\ten\ten\ten\ten\ten
+\DviClose
+\end
+EOF
+
+{
+'time' tex test0
+'time' tex test1
+'time' tex test2
+'time' tex test3
+
+'time' dvichop test2.dvi
+'time' dvichop test3.dvi
+} > /dev/null 2> timetexd.log
+
+timetaken=( `sed 's/^0://' timetexd.log` )
+
+echo "## times in seconds: time for TeX [ + time for dvichop]"
+echo "## expect about 7 times quicker with flushing, 50 times quicker without"
+echo "1 iteration without TeX daemon: ${timetaken[0]}"
+echo "100 iterations without TeX daemon: ${timetaken[1]}"
+echo "100 iterations with flushing: ${timetaken[2]} + ${timetaken[4]}"
+echo "100 iterations without flushing: ${timetaken[3]} + ${timetaken[5]}"
+
+# end of timtexd

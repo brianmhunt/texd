@@ -1,0 +1,19 @@
+total 102
+-r--r--r--   1 jfine    users        1636 Feb 23 15:35 ANNOUNCE
+-r--r--r--   1 jfine    users       17992 Feb 22 21:07 COPYING
+-r--r--r--   1 jfine    users        8193 Feb 22 21:07 FAQ
+-r--r--r--   1 jfine    users        2352 Feb 23 15:25 INSTALL
+-rw-r--r--   1 jfine    users           0 Feb 24 18:26 MANIFEST
+-r--r--r--   1 jfine    users         721 Feb 22 21:07 Makefile
+-r--r--r--   1 jfine    users        2523 Feb 23 15:19 README
+-rwxr-xr-x   1 jfine    users       21305 Oct 14 14:18 dvichop
+-r--r--r--   1 jfine    users       18976 Feb 22 21:15 dvichop.c
+-r--r--r--   1 jfine    users        1911 Feb 22 21:07 dvichop.sty
+-r--r--r--   1 jfine    users        6077 Feb 22 21:07 dviop.h
+-r-xr-xr-x   1 jfine    users        1490 Feb 24 18:22 latexpad
+-r--r--r--   1 jfine    users        1401 Feb 23 15:39 latexpad.help
+-r--r--r--   1 jfine    users        1475 Feb 24 18:23 latexpad.sty
+-r-xr-xr-x   1 jfine    users        1251 Feb 24 18:21 texpad
+-r--r--r--   1 jfine    users        1328 Feb 23 15:40 texpad.help
+-r--r--r--   1 jfine    users        1378 Feb 23 15:43 texpad.sty
+-r-xr-xr-x   1 jfine    users        2177 Feb 23 15:50 timetexd

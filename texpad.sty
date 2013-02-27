@@ -1,0 +1,58 @@
+% $Id: texpad.sty,v 1.1 2002/02/23 15:43:11 jfine Exp $
+% TeX macros for texpad
+
+% Copyright (c) Jonathan Fine, 2002
+% mailto:jfine@activetex.org
+
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License; either version
+% 2 of the License, or (at your option) any later version.
+
+% $Log: texpad.sty,v $
+% Revision 1.1  2002/02/23 15:43:11  jfine
+% Initial revision
+%
+
+\input dvichop.sty % must be in TeX's input path
+
+\def\texpadloop{%
+  \begingroup
+    \newlinechar `Z
+    \message{ZGimme: }% prompt on a new line
+  \endgroup
+  \read -1 to \matter
+  \def\temp{\par}
+  \ifx\matter\temp
+  \else
+    \setmatter
+    \expandafter\texpadloop
+  \fi
+}
+
+\def\setmatter{%
+  \DviBegin
+  \begingroup
+    \hoffset -.85in
+    \voffset -.85in
+    \hsize 4.6in
+    \vsize 3.4in
+    \shipout\vbox to \vsize{\scrollmode\matter\outerempty\par\vfill}
+  \endgroup
+  \DviEnd
+}
+
+\outer\def\outerempty{} % trap runaways
+
+\def\help{\input texpad.help } % as \matter, prints help screen
+
+\def\texpad#1#2{%
+  \global\mathchardef\DviNum=#1 % write to \number\DviNum.dvi
+  \global\mathchardef\DviPid=#2 % send signal to xdvi
+  %
+  \immediate\write16{TeXpad version 0.1: empty response to exit}
+  \def\matter{\help}\setmatter % display the help screen
+  \texpadloop
+  \immediate\write16{Thank you for using TeXpad}
+}
+
+% end of texpad.sty

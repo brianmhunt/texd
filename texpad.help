@@ -1,0 +1,50 @@
+% $Id: texpad.help,v 1.1 2002/02/23 15:40:14 jfine Exp $
+% Help page for TeXpad
+
+% Copyright (c) Jonathan Fine, 2001
+% mailto:jfine@activetex.org
+
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License; either version
+% 2 of the License, or (at your option) any later version.
+
+% $Log: texpad.help,v $
+% Revision 1.1  2002/02/23 15:40:14  jfine
+% Initial revision
+%
+
+\hrule
+\medskip
+\centerline{\bf Welcome to \TeX pad 0.1}
+\medskip
+An interactive program for evaluating \TeX\ expressions.  
+\medskip
+\TeX pad typesets the text supplied at \TeX's {\tt Gimme:} prompt, and
+displays it using xdvi.  \TeX pad evaluates the material in a group
+(in fact, a {\tt\string\vbox}).
+\medskip
+Some examples you might like to try.
+\medskip
+
+{\tt Gimme: \string\TeX\ is wonderful!!!}\par
+{\tt Gimme: \string\input\ story }\par
+{\tt Gimme: \string\bf\ \string\input\ story }\par
+{\tt Gimme: \string\tt\ \string\meaning\string\TeX}\par
+\medskip
+
+For long expressions, use braces: {\tt\string{} $\dots$ lots of stuff
+$\ldots$ {\tt\string}} 
+
+\medskip
+
+To exit, give \TeX pad an empty expression.
+\medskip
+To see this message again, 
+{\tt Gimme: \string\help }\par
+\medskip
+{\bf For \TeX pad news, visit}{\tt\ http://www.activetex.org}
+\medskip
+
+\hrule
+
+% end of texpad.help

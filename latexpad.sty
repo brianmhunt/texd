@@ -1,0 +1,61 @@
+% $Id: latexpad.sty,v 1.1 2002/02/24 18:23:19 jfine Exp $
+% TeX macros for latexpad
+
+% Copyright (c) Jonathan Fine, 2002
+% mailto:jfine@activetex.org
+
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License; either version
+% 2 of the License, or (at your option) any later version.
+
+% $Log: latexpad.sty,v $
+% Revision 1.1  2002/02/24 18:23:19  jfine
+% Initial revision
+%
+
+\ifx \documentstyle \undefined \else
+  \ifx \documentclass \undefined
+  \else \ProvidesPackage{latexpad}[2002/02/24] \fi
+\fi
+
+\def\latexpadloop{%
+  \begingroup
+    \newlinechar `Z
+    \message{ZGimme: }% prompt on a new line
+  \endgroup
+  \read -1 to \matter
+  \def\temp{\par}
+  \ifx\matter\temp
+  \else
+    \setmatter
+    \expandafter\latexpadloop
+  \fi
+}
+
+\def\setmatter{%
+  \DviBegin
+  \begingroup
+    \hoffset -.85in
+    \voffset -.85in
+    \hsize 4.6in
+    \vsize 3.4in
+    \shipout\vbox to \vsize{\scrollmode\matter\outerempty\par\vfill}%
+  \endgroup
+  \DviEnd
+}
+
+\outer\def\outerempty{} % trap runaways
+
+\def\help{\input latexpad.help } % as \matter, prints help screen
+
+\def\latexpad#1#2{%
+  \global\mathchardef\DviNum=#1 % write to \number\DviNum.dvi
+  \global\mathchardef\DviPid=#2 % send signal to xdvi
+%
+  \immediate\write16{LaTeXpad version 0.1: empty response to exit}
+  \def\matter{\help}\setmatter % display the help screen
+  \latexpadloop
+  \immediate\write16{Thank you for using LaTeXpad}
+}
+
+% end of latexpad.sty

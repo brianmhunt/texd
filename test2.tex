@@ -1,0 +1,7 @@
+\input dvichop.sty 
+\def\doit{\DviBegin\shipout\vbox{\input story }\DviEnd}
+\def\ten{\doit\doit\doit\doit\doit\doit\doit\doit\doit\doit}
+\DviOpen
+\ten\ten\ten\ten\ten\ten\ten\ten\ten\ten
+\DviClose
+\end
